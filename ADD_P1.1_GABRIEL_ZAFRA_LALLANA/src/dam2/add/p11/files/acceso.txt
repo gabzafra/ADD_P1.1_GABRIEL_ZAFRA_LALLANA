@@ -1,2 +1,2 @@
-admin:admin:0
+admin:trololo:4545
 pepe:12345:1
