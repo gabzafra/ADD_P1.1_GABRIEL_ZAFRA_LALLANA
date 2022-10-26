@@ -3,6 +3,7 @@ package dam2.add.p11;
 public class Usuario {
   private String nombre;
   private String clave;
+  private int intentos;
 
   public Usuario() {
     this("", "");
@@ -11,6 +12,7 @@ public class Usuario {
   public Usuario(String nombre, String clave) {
     this.nombre = nombre;
     this.clave = clave;
+    this.intentos = 0;
   }
 
   public String getNombre() {
@@ -27,5 +29,13 @@ public class Usuario {
 
   public void setClave(String clave) {
     this.clave = clave;
+  }
+
+  public int getIntentos() {
+    return intentos;
+  }
+
+  public void setIntentos(int intentos) {
+    this.intentos = intentos;
   }
 }
