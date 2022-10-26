@@ -8,6 +8,8 @@ public class MainP11 {
 
     Db test = new Db(usersFilePath);
     test.getAllUsers().forEach((key, value) -> System.out.println(value.getNombre()));
+
+    System.out.println(">>>>>" + test.getUserByName("pepe").getNombre());
   }
 
 }

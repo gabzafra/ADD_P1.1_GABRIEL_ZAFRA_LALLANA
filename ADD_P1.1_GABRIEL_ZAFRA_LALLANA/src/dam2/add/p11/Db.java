@@ -32,4 +32,23 @@ public class Db {
     }
     return respuesta;
   }
+
+  public Usuario getUserByName(String username) {
+    Usuario respuesta = new Usuario();
+    try (BufferedReader output = new BufferedReader(new FileReader(localFile))) {
+      String cursor;
+      while ((cursor = output.readLine()) != null) {
+        String[] rowsArr = cursor.split(":");
+        if (rowsArr[0].equals(username)) {
+          respuesta.setNombre(rowsArr[0]);
+          respuesta.setClave(rowsArr[1]);
+          respuesta.setIntentos(Integer.valueOf(rowsArr[2]));
+          return respuesta;
+        }
+      }
+    } catch (Exception e) {
+      return respuesta;
+    }
+    return respuesta;
+  }
 }
