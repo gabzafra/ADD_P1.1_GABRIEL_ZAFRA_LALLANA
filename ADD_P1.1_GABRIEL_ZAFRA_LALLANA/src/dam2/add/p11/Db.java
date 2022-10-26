@@ -17,12 +17,6 @@ public class Db {
     this.tempFile = new File(tempPath);
   }
 
-  // public Usuario createNewUser(Usuario user) {
-  // Usuario response = new Usuario();
-  // BufferedWriter input = new BufferedWriter(new FileWriter(localFile, true));
-  // return response;
-  // }
-
   public HashMap<String, Usuario> getAllUsers() {
     HashMap<String, Usuario> respuesta = new HashMap<>();
 
@@ -122,6 +116,24 @@ public class Db {
 
     } else {
       return false;
+    }
+  }
+
+  public Usuario createNewUser(Usuario user) {
+    HashMap<String, Usuario> userList = getAllUsers();
+
+    if (!userList.containsKey(user.getNombre())) {
+      try (BufferedWriter input = new BufferedWriter(new FileWriter(localFile, true))) {
+        String formatedRow =
+            user.getNombre() + ":" + user.getClave() + ":" + user.getIntentos();
+        input.write(formatedRow);
+        input.newLine();
+      } catch (Exception e) {
+        return new Usuario();
+      }
+      return new Usuario(user.getNombre(), user.getClave());
+    } else {
+      return new Usuario();
     }
   }
 }

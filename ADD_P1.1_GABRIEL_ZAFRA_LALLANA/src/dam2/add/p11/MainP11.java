@@ -10,15 +10,29 @@ public class MainP11 {
 
     Db test = new Db(usersFilePath, tempFilePath);
     test.getAllUsers().forEach((key, value) -> viewUserDetail(value));
+    System.out.println("-----------------------");
 
     test.updateUser(new Usuario("admin", "trololo", 4545));
 
     test.getAllUsers().forEach((key, value) -> viewUserDetail(value));
-
+    System.out.println("-----------------------");
     System.out.println(test.deleteUserByName("wololo"));
     System.out.println(test.deleteUserByName("admin"));
 
     test.getAllUsers().forEach((key, value) -> viewUserDetail(value));
+    System.out.println("-----------------------");
+    test.createNewUser(new Usuario("adam", "9999"));
+
+    test.getAllUsers().forEach((key, value) -> viewUserDetail(value));
+    System.out.println("-----------------------");
+    test.createNewUser(new Usuario("Betty", "waea"));
+
+    test.getAllUsers().forEach((key, value) -> viewUserDetail(value));
+    System.out.println("-----------------------");
+    System.out.println(test.deleteUserByName("adam"));
+
+    test.getAllUsers().forEach((key, value) -> viewUserDetail(value));
+
   }
 
   private static void viewUserDetail(Usuario user) {
