@@ -1,2 +1,2 @@
-admin:admin
-pepe:12345
+admin:admin:0
+pepe:12345:1

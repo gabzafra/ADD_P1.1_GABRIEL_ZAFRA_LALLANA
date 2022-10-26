@@ -10,9 +10,13 @@ public class Usuario {
   }
 
   public Usuario(String nombre, String clave) {
+    this(nombre, clave, 0);
+  }
+
+  public Usuario(String nombre, String clave, int intentos) {
     this.nombre = nombre;
     this.clave = clave;
-    this.intentos = 0;
+    this.intentos = intentos;
   }
 
   public String getNombre() {
