@@ -14,6 +14,11 @@ public class MainP11 {
     test.updateUser(new Usuario("admin", "trololo", 4545));
 
     test.getAllUsers().forEach((key, value) -> viewUserDetail(value));
+
+    System.out.println(test.deleteUserByName("wololo"));
+    System.out.println(test.deleteUserByName("admin"));
+
+    test.getAllUsers().forEach((key, value) -> viewUserDetail(value));
   }
 
   private static void viewUserDetail(Usuario user) {

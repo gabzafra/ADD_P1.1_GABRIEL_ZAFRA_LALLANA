@@ -93,4 +93,35 @@ public class Db {
       return respuesta;
     }
   }
+
+  public boolean deleteUserByName(String userName) {
+    HashMap<String, Usuario> userList = getAllUsers();
+
+    if (userList.containsKey(userName)) {
+      userList.remove(userName);
+      try {
+        tempFile.createNewFile();
+      } catch (IOException e) {
+        return false;
+      }
+
+      try (BufferedWriter input = new BufferedWriter(new FileWriter(tempFile))) {
+        for (Usuario user : userList.values()) {
+          String formatedRow = user.getNombre() + ":" + user.getClave() + ":" + user.getIntentos();
+          input.write(formatedRow);
+          input.newLine();
+        }
+      } catch (Exception e) {
+        return false;
+      }
+
+      localFile.delete();
+      tempFile.renameTo(localFile);
+
+      return true;
+
+    } else {
+      return false;
+    }
+  }
 }

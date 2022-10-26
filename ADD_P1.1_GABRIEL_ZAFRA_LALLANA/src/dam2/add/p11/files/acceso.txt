@@ -1,2 +1,1 @@
-admin:trololo:4545
 pepe:12345:1
