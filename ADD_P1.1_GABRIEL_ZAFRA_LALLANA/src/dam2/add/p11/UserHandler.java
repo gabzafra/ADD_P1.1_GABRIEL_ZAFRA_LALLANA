@@ -11,11 +11,57 @@ public class UserHandler {
         ViewCreator.showError("El usuario " + foundUserData.getNombre() + " esta BLOQUEADO.");
         return new Usuario();
       } else {
-        // TODO INTENTAR AUTORIZAR
+        return autenticateUser(db, user.getNombre(), user.getClave());
       }
     } else {
       return createNewUser(db, user);
     }
+  }
+
+  private static Usuario autenticateUser(Db db, String userName, String password) {
+    Scanner input = new Scanner(System.in);
+
+    Usuario foundUserData = new Usuario();
+
+    boolean isUserBlocked = false;
+    while (!isUserBlocked) {
+      foundUserData = db.getUserByName(userName);
+      if (foundUserData.getNombre().length() > 0) {
+        if (foundUserData.getClave().equals(password)) {
+          foundUserData.setIntentos(0);
+          foundUserData = db.updateUser(foundUserData);
+          if (foundUserData.getNombre().length() == 0) {
+            ViewCreator.showError("No se ha podido acceder a la base de datos de usuarios.");
+          }
+          return foundUserData;
+        } else {
+          foundUserData.setIntentos(foundUserData.getIntentos() + 1);
+          foundUserData = db.updateUser(foundUserData);
+          if (foundUserData.getNombre().length() == 0) {
+            ViewCreator.showError("No se ha podido acceder a la base de datos de usuarios.");
+            return foundUserData;
+          }
+
+          ViewCreator.showError("La clave introducida no es correcta.");
+
+          if (foundUserData.getIntentos() > 2) {
+            isUserBlocked = true;
+          } else {
+            if (ViewCreator.askUserYesNo("¿Desea intentarlo de nuevo? S/N")) {
+              ViewCreator.showInfo("Introduzca su clave de acceso:");
+              password = input.nextLine();
+            } else {
+              return new Usuario();
+            }
+          }
+        }
+      } else {
+        ViewCreator.showError("No se ha podido acceder a la base de datos de usuarios.");
+        return foundUserData;
+      }
+    }
+    ViewCreator.showError(
+        "Ha realizado demasiados intentos, el usuario " + userName + " ha sido BLOQUEADO.");
     return new Usuario();
   }
 
