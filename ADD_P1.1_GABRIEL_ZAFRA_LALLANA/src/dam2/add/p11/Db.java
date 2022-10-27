@@ -24,8 +24,8 @@ public class Db {
     try (BufferedReader output = new BufferedReader(new FileReader(localFile))) {
       String cursor;
       while ((cursor = output.readLine()) != null) {
-        String[] rowsArr = cursor.split(":");
-        respuesta.put(rowsArr[0], new Usuario(rowsArr[0], rowsArr[1], Integer.valueOf(rowsArr[2])));
+        String[] colsArr = cursor.split(":");
+        respuesta.put(colsArr[0], new Usuario(colsArr[0], colsArr[1], Integer.valueOf(colsArr[2])));
       }
     } catch (Exception e) {
       return respuesta;
