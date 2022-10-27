@@ -94,4 +94,13 @@ public class UserHandler {
     }
     return newUser;
   }
+
+  public static Usuario resetUserLogAttemps(Db db, String userName) {
+    Usuario user = db.getUserByName(userName);
+    if (user.getNombre().length() > 0) {
+      user.setIntentos(0);
+      user = db.updateUser(user);
+    }
+    return user;
+  }
 }

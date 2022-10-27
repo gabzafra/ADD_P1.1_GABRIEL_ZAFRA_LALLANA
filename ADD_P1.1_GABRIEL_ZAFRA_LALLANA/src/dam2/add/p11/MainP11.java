@@ -21,6 +21,18 @@ public class MainP11 {
       ViewCreator.showError("No se ha podido autorizar al usuario.");
     }
 
+    ViewCreator.showUserList(
+        db.getAllUsers().values().stream().map(user -> user.getNombre()).toArray(String[]::new));
+
+    currentUser = new Usuario("adam", "");
+
+
+    if (UserHandler.resetUserLogAttemps(db, currentUser.getNombre()).getNombre().length() > 0) {
+      ViewCreator.showUserDetail(currentUser);
+    } else {
+      System.out.println("RESET FAIL");
+    }
+
   }
 
 
