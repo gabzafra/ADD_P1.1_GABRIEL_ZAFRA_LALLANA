@@ -22,11 +22,39 @@ public class MainP11 {
 
     Scanner input = new Scanner(System.in);
 
+    Usuario user = new Usuario();
     boolean haTerminado = false;
 
+    while (!haTerminado) {
+      ViewCreator.showInfo("Introduzca su nombre de usuario:");
+      user.setNombre(input.nextLine());
+      ViewCreator.showInfo("Introduzca su clave de acceso:");
+      user.setClave(input.nextLine());
+      user = users.loginUser(user);
 
-    ViewCreator.showUserList(
-        db.getAllUsers().values().stream().map(user -> user.getNombre()).toArray(String[]::new));
+      if (user.getNombre().equals("admin")) {
+        boolean goBack = false;
+        while (!goBack) {
+          ViewCreator.showInfo("ZONA DE ADMINISTRACIÓN");
+          ViewCreator.showInfo("Usuarios BLOQUEADOS");
+          ViewCreator.showUserList(db.getAllUsers());
+          ViewCreator.showInfo(
+              "Escriba el nombre del usuario que desea desbloquear o 0 para volver atrás:");
+          String userInput = input.nextLine();
+          if (userInput.equals("0")) {
+            goBack = true;
+          } else if (users.resetUserLogAttemps(userInput).getNombre().length() > 0) {
+            ViewCreator.showInfo("Usuario desbloqueado.");
+          } else {
+            ViewCreator.showError("No se ha podido desbloquear el usuario.");
+          }
+        }
+      } else if (user.getNombre().length() > 0) {
+        ViewCreator.showInfo("Hola " + user.getNombre() + ".");
+        haTerminado = true;
+      }
+    }
+    ViewCreator.showInfo("Programa terminado.");
 
 
 

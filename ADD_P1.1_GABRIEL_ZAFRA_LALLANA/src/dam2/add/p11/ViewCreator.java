@@ -1,19 +1,21 @@
 package dam2.add.p11;
 
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class ViewCreator {
   public static void showError(String message) {
-    System.err.println("ERROR : " + message);
+    System.out.println("ERROR : " + message);
   }
 
   public static void showInfo(String message) {
     System.out.println(message);
   }
 
-  public static void showUserList(String[] usersList) {
-    Arrays.stream(usersList).forEach(System.out::println);
+  public static void showUserList(HashMap<String, Usuario> userList) {
+    userList.values().stream().filter(x -> x.getIntentos() > 2)
+        .forEach(user -> System.out.println(user.getNombre()));
+
   }
 
   public static void showUserDetail(Usuario user) {
@@ -43,5 +45,6 @@ public class ViewCreator {
     }
     return response;
   }
+
 
 }
