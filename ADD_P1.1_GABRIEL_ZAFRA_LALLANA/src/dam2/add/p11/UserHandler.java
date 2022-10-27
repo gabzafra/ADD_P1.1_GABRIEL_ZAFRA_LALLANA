@@ -14,7 +14,7 @@ public class UserHandler {
         // TODO INTENTAR AUTORIZAR
       }
     } else {
-      return createNewUser(db, user);// TODO INTENTA CREAR NUEVO USUARIO
+      return createNewUser(db, user);
     }
     return new Usuario();
   }

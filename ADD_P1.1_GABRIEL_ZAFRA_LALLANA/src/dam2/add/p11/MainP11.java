@@ -13,7 +13,7 @@ public class MainP11 {
     ViewCreator.showUserList(
         db.getAllUsers().values().stream().map(user -> user.getNombre()).toArray(String[]::new));
 
-    Usuario currentUser = UserHandler.loginUser(db, new Usuario("wololo", "9999"));
+    Usuario currentUser = UserHandler.loginUser(db, new Usuario("a", "a"));
 
     if (currentUser.getNombre().length() > 0) {
       ViewCreator.showUserDetail(currentUser);
