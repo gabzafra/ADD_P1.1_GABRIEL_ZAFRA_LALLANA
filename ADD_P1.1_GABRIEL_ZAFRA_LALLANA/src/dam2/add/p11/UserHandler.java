@@ -3,7 +3,14 @@ package dam2.add.p11;
 import java.util.Scanner;
 
 public class UserHandler {
-  public static Usuario loginUser(Db db, Usuario user) {
+
+  private final Db db;
+
+  public UserHandler(Db db) {
+    this.db = db;
+  }
+
+  public Usuario loginUser(Usuario user) {
     Usuario foundUserData = db.getUserByName(user.getNombre());
 
     if (!foundUserData.getNombre().equals("")) {
@@ -11,14 +18,14 @@ public class UserHandler {
         ViewCreator.showError("El usuario " + foundUserData.getNombre() + " esta BLOQUEADO.");
         return new Usuario();
       } else {
-        return autenticateUser(db, user.getNombre(), user.getClave());
+        return autenticateUser(user.getNombre(), user.getClave());
       }
     } else {
-      return createNewUser(db, user);
+      return createNewUser(user);
     }
   }
 
-  private static Usuario autenticateUser(Db db, String userName, String password) {
+  private Usuario autenticateUser(String userName, String password) {
     Scanner input = new Scanner(System.in);
 
     Usuario foundUserData = new Usuario();
@@ -65,7 +72,7 @@ public class UserHandler {
     return new Usuario();
   }
 
-  private static Usuario createNewUser(Db db, Usuario user) {
+  private Usuario createNewUser(Usuario user) {
     Usuario newUser = new Usuario();
 
     ViewCreator.showInfo("No hay un usuario " + user.getNombre() + " en el sistema.");
@@ -95,7 +102,7 @@ public class UserHandler {
     return newUser;
   }
 
-  public static Usuario resetUserLogAttemps(Db db, String userName) {
+  public Usuario resetUserLogAttemps(String userName) {
     Usuario user = db.getUserByName(userName);
     if (user.getNombre().length() > 0) {
       user.setIntentos(0);

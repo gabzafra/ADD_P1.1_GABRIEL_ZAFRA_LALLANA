@@ -10,30 +10,13 @@ public class MainP11 {
 
     Db db = new Db(usersFilePath, tempFilePath);
 
-    ViewCreator.showUserList(
-        db.getAllUsers().values().stream().map(user -> user.getNombre()).toArray(String[]::new));
-
-    Usuario currentUser = UserHandler.loginUser(db, new Usuario("admin", "admin"));
-
-    if (currentUser.getNombre().length() > 0) {
-      ViewCreator.showUserDetail(currentUser);
-    } else {
-      ViewCreator.showError("No se ha podido autorizar al usuario.");
-    }
+    UserHandler users = new UserHandler(db);
 
     ViewCreator.showUserList(
         db.getAllUsers().values().stream().map(user -> user.getNombre()).toArray(String[]::new));
 
-    currentUser = new Usuario("adam", "");
-
-
-    if (UserHandler.resetUserLogAttemps(db, currentUser.getNombre()).getNombre().length() > 0) {
-      ViewCreator.showUserDetail(currentUser);
-    } else {
-      System.out.println("RESET FAIL");
-    }
+    Usuario currentUser = users.loginUser(new Usuario("admin", "admin"));
 
   }
-
 
 }
