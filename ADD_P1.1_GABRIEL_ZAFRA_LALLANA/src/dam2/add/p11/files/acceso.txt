@@ -1,2 +1,0 @@
-admin:admin:0
-pepe:1234:1
