@@ -1,2 +1,2 @@
-Betty:waea:0
+admin:admin:0
 pepe:1234:1

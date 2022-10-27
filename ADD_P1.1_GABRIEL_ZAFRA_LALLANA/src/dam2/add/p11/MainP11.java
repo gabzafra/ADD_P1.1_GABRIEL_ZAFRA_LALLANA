@@ -8,36 +8,20 @@ public class MainP11 {
     String tempFilePath =
         "D:/DAM/2022-2023/_repos/ADD_P1.1_GABRIEL_ZAFRA_LALLANA/ADD_P1.1_GABRIEL_ZAFRA_LALLANA/src/dam2/add/p11/files/temp.txt";
 
-    Db test = new Db(usersFilePath, tempFilePath);
-    test.getAllUsers().forEach((key, value) -> viewUserDetail(value));
-    System.out.println("-----------------------");
+    Db db = new Db(usersFilePath, tempFilePath);
 
-    test.updateUser(new Usuario("admin", "trololo", 4545));
+    ViewCreator.showUserList(
+        db.getAllUsers().values().stream().map(user -> user.getNombre()).toArray(String[]::new));
 
-    test.getAllUsers().forEach((key, value) -> viewUserDetail(value));
-    System.out.println("-----------------------");
-    System.out.println(test.deleteUserByName("wololo"));
-    System.out.println(test.deleteUserByName("admin"));
+    Usuario currentUser = UserHandler.loginUser(db, new Usuario("admin", "admin"));
 
-    test.getAllUsers().forEach((key, value) -> viewUserDetail(value));
-    System.out.println("-----------------------");
-    test.createNewUser(new Usuario("adam", "9999"));
-
-    test.getAllUsers().forEach((key, value) -> viewUserDetail(value));
-    System.out.println("-----------------------");
-    test.createNewUser(new Usuario("Betty", "waea"));
-
-    test.getAllUsers().forEach((key, value) -> viewUserDetail(value));
-    System.out.println("-----------------------");
-    System.out.println(test.deleteUserByName("adam"));
-
-    test.getAllUsers().forEach((key, value) -> viewUserDetail(value));
+    if (currentUser.getNombre().length() > 0) {
+      ViewCreator.showUserDetail(currentUser);
+    } else {
+      ViewCreator.showError("No se ha podido autorizar al usuario.");
+    }
 
   }
 
-  private static void viewUserDetail(Usuario user) {
-    System.out.println(
-        "> " + user.getNombre() + " > " + user.getClave() + " > " + user.getIntentos() + " <");
-  }
 
 }
