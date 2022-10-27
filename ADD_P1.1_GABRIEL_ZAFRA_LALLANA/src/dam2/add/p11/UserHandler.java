@@ -5,9 +5,11 @@ import java.util.Scanner;
 public class UserHandler {
 
   private final Db db;
+  private final Logger logger;
 
-  public UserHandler(Db db) {
+  public UserHandler(Db db, Logger logger) {
     this.db = db;
+    this.logger = logger;
   }
 
   public Usuario loginUser(Usuario user) {
@@ -16,6 +18,7 @@ public class UserHandler {
     if (!foundUserData.getNombre().equals("")) {
       if (foundUserData.getIntentos() >= 3) {
         ViewCreator.showError("El usuario " + foundUserData.getNombre() + " esta BLOQUEADO.");
+        logger.addLog(user.getNombre(), false);
         return new Usuario();
       } else {
         return autenticateUser(user.getNombre(), user.getClave());
@@ -39,10 +42,13 @@ public class UserHandler {
           foundUserData = db.updateUser(foundUserData);
           if (foundUserData.getNombre().length() == 0) {
             ViewCreator.showError("No se ha podido acceder a la base de datos de usuarios.");
+            logger.addLog(userName, false);
           }
+          logger.addLog(userName, true);
           return foundUserData;
         } else {
           foundUserData.setIntentos(foundUserData.getIntentos() + 1);
+          logger.addLog(userName, false);
           foundUserData = db.updateUser(foundUserData);
           if (foundUserData.getNombre().length() == 0) {
             ViewCreator.showError("No se ha podido acceder a la base de datos de usuarios.");
@@ -64,6 +70,7 @@ public class UserHandler {
         }
       } else {
         ViewCreator.showError("No se ha podido acceder a la base de datos de usuarios.");
+        logger.addLog(userName, false);
         return foundUserData;
       }
     }

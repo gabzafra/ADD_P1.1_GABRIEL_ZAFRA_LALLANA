@@ -1,7 +1,5 @@
 package dam2.add.p11;
 
-import java.util.Scanner;
-
 public class MainP11 {
 
   public static void main(String[] args) {
@@ -16,19 +14,14 @@ public class MainP11 {
 
     Logger logger = new Logger(logFilePath);
 
-    UserHandler users = new UserHandler(db);
+    UserHandler users = new UserHandler(db, logger);
 
     ViewCreator.showUserList(
         db.getAllUsers().values().stream().map(user -> user.getNombre()).toArray(String[]::new));
 
-    Usuario currentUser = users.loginUser(new Usuario("admin", "admin"));
+    users.loginUser(new Usuario("admin", "a"));
 
-    logger.addLog("Trololo", false);
 
-    Scanner sc = new Scanner(System.in);
-    sc.nextLine();
-
-    System.out.println(logger.addLog("Trololo", true));
   }
 
 }
