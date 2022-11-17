@@ -18,7 +18,7 @@ public class Logger {
 
     try (BufferedWriter input = new BufferedWriter(new FileWriter(loggerFile, true))) {
       Date now = new Date();
-      DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+      DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
       String formatedRow = dateFormat.format(now) + ";" + name + ";" + (isValid ? "OK" : "ERROR");
 
